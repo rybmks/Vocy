@@ -4,7 +4,7 @@ using Domain.User;
 
 public interface IUserRepository
 {
-    public void CreateUser(User user);
+    Task CreateUser(User user);
 
-    public void RemoveUser(Guid userId);
+    Task RemoveUser(Guid userId);
 }
