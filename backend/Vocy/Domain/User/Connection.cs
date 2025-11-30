@@ -1,7 +1,6 @@
 namespace Domain.User;
 
-public record Connection
+public record Connection : BaseIdentity
 {
-    public Guid Id { get; init; }
     public List<ConnectionUser> Members { get; init; } = new();
 }

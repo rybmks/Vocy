@@ -1,14 +1,8 @@
-namespace Infrastructure.Database;
-
-using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
-public class VocyDbContext : DbContext
-{
-    public VocyDbContext(DbContextOptions<VocyDbContext> options)
-        : base(options)
-    {
-    }
+namespace Infrastructure.Database;
 
-    public DbSet<User> Users => Set<User>();
+public class VocyDbContext(DbContextOptions<VocyDbContext> options) : DbContext(options)
+{
+    public DbSet<Domain.User.User> Users => Set<Domain.User.User>();
 }

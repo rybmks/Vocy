@@ -2,9 +2,7 @@ namespace Application.User;
 
 using Domain.User;
 
-public interface IUserRepository
+public interface Repository<T> : IRepository<T> where T : BaseIdentity
 {
-    Task CreateUser(User user);
 
-    Task RemoveUser(Guid userId);
 }
