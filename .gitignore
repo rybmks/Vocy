@@ -1,6 +1,9 @@
 .idea
 .DS_Store
 
+#configs
+appsettings.Development.json
+appsettings.json
 
 [Dd]ebug/
 [Dd]ebugPublic/
