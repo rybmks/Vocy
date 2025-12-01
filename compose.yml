@@ -1,0 +1,9 @@
+services: 
+    db:
+        container_name: vocy-database
+        image: postgres
+        environment:
+            POSTGRES_USER: "user"
+            POSTGRES_PASSWORD: "12345"
+        ports:
+            - "5432:5432"
