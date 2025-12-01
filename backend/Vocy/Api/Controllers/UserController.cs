@@ -4,15 +4,12 @@ using Domain.User;
 
 namespace Api.Controllers;
 
-public class UserController(IUserRepository repository) : Controller
+public class UserController(UserService userService) : Controller
 {
-    private readonly IUserRepository _repository = repository;
-
     [HttpPost("create")]
-    public IActionResult Create(User user)
+    public async Task<IActionResult> Create([FromBody] User user)
     {
-        _repository.CreateUser(user);
-
+        await userService.CreateUser(user);
         return Accepted();
     }
 }

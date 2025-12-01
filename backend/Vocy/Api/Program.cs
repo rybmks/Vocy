@@ -13,6 +13,8 @@ builder.Services.AddDbContext<VocyDbContext>(opts =>
 });
 
 builder.Services.AddScoped<IUserRepository, PgUserRepository>();
+builder.Services.AddScoped<UserService>();
+
 
 builder.Services.AddOpenApi();
 
