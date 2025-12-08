@@ -1,3 +1,5 @@
+using Domain.Base;
+
 namespace Domain.User;
 
-public record User(Guid Id, String Name, String Email, String Password);
+public record User(String Name, String Email, String Password) : BaseIdentity;
