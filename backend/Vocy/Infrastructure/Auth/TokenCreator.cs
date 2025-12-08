@@ -9,17 +9,17 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Auth;
 
-public class JwtTokenCreator(IConfiguration conf) : ITokenCreator
+public class TokenCreator(IConfiguration conf) : ITokenCreator
 {
 //#TODO: Error handling
-    private readonly string _secretKey = conf["JwtSettings:Key"] ??
-                                         throw new InvalidOperationException("Configuration must be provided");
+    private readonly string _secretKey = conf["JwtSettings:Key"] 
+        ?? throw new InvalidOperationException("Configuration must be provided");
 
-    private readonly string _issuer = conf["JwtSettings:Issuer"] ??
-                                      throw new InvalidOperationException("Configuration must be provided");
+    private readonly string _issuer = conf["JwtSettings:Issuer"] 
+        ?? throw new InvalidOperationException("Configuration must be provided");
 
-    private readonly string _audience = conf["JwtSettings:Audience"] ??
-                                        throw new InvalidOperationException("Configuration must be provided");
+    private readonly string _audience = conf["JwtSettings:Audience"] 
+        ?? throw new InvalidOperationException("Configuration must be provided");
 
     public string CreateAccessToken(TokenClaims claims, DateTime expiresIn)
     {

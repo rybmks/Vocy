@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [Route("api")]
-public class UserController(UserService userService) : Controller
+public class UserController(AuthService userService) : Controller
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand loginUserCommand)

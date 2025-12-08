@@ -14,7 +14,7 @@ public class PgRefreshTokenRepository(VocyDbContext ctx) : IRepository<RefreshTo
 
     public async Task<Guid> Save(RefreshToken token)
     {
-        await _ctx.RefreshTokens.AddAsync(token);
+        _ctx.RefreshTokens.Add(token);
         await _ctx.SaveChangesAsync();
         return token.Id;
     }
@@ -26,11 +26,11 @@ public class PgRefreshTokenRepository(VocyDbContext ctx) : IRepository<RefreshTo
     public async Task<RefreshToken> Get(Guid id) =>
         await _ctx.RefreshTokens.FindAsync(id) ?? throw new InvalidOperationException();
 
-    public async Task<RefreshToken> GetFirstOrDefault(Expression<Func<RefreshToken, bool>> expr) =>
-        await _ctx.RefreshTokens.FirstOrDefaultAsync(expr) ?? throw new InvalidOperationException();
+    public async Task<RefreshToken?> GetFirstOrDefault(Expression<Func<RefreshToken, bool>> filter) =>
+        await _ctx.RefreshTokens.FirstOrDefaultAsync(filter) ?? default(RefreshToken);
 
-    public async Task<IEnumerable<RefreshToken>> GetAll(Expression<Func<RefreshToken, bool>> expr) =>
-        await _ctx.RefreshTokens.Where(expr).ToListAsync();
+    public async Task<IEnumerable<RefreshToken>> GetAll(Expression<Func<RefreshToken, bool>> filter) =>
+        await _ctx.RefreshTokens.Where(filter).ToListAsync();
 
     #endregion
 

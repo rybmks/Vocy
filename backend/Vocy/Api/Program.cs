@@ -43,8 +43,8 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IRepository<User>, PgUserRepository>();
 builder.Services.AddScoped<IRepository<RefreshToken>, PgRefreshTokenRepository>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
-builder.Services.AddScoped<ITokenCreator, JwtTokenCreator>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ITokenCreator, TokenCreator>();
+builder.Services.AddScoped<AuthService>();
 
 
 builder.Services.AddOpenApi();
