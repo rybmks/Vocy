@@ -19,7 +19,6 @@ public class UserService(
     private const int AccessTokenExpirationDurationSecs = 120;
     private const int RefreshTokenExpirationDurationHours = 6;
 
-    //TODO: CHACGE TOKEN HASHER 
     public async Task<AuthResponse> Register(RegisterUserCommand registerUserCommand)
     {
         User user = new(registerUserCommand.Name, registerUserCommand.Email,
