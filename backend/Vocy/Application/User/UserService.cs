@@ -28,7 +28,7 @@ public class UserService(
 
         var userId = await _userRepository.AddAsync(user);
 
-        var (accessToken, refreshToken) = await this.CreateAndAddTokens(userId);
+        var (accessToken, refreshToken) = await this.CreateTokens(userId);
 
         await unitOfWork.SaveChangesAsync();
         return new AuthResponse(userId, accessToken, refreshToken);
@@ -47,7 +47,7 @@ public class UserService(
             throw new Exception("Incorrect password");
         }
 
-        var (accessToken, refreshToken) = await this.CreateAndAddTokens(user.Id);
+        var (accessToken, refreshToken) = await this.CreateTokens(user.Id);
 
         await unitOfWork.SaveChangesAsync();
         return new AuthResponse(user.Id, accessToken, refreshToken);
@@ -65,13 +65,13 @@ public class UserService(
 
         oldRefreshToken.RevokedAt = DateTime.UtcNow;
 
-        var (accessToken, refreshTokenValue) = await this.CreateAndAddTokens(oldRefreshToken.UserId);
+        var (accessToken, refreshTokenValue) = await this.CreateTokens(oldRefreshToken.UserId);
 
         await unitOfWork.SaveChangesAsync();
         return new AuthResponse(oldRefreshToken.UserId, accessToken, refreshTokenValue);
     }
 
-    private async Task<(String, String)> CreateAndAddTokens(Guid userId)
+    private async Task<(String, String)> CreateTokens(Guid userId)
     {
         var claims = new TokenClaims(userId);
         var accessToken =
