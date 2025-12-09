@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Application.Auth.Helpers;
@@ -8,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Auth;
 
-public class TokenCreator(IConfiguration conf) : ITokenCreator
+public class TokenManager(IConfiguration conf) : ITokenManager
 {
 //#TODO: Error handling
     private readonly string _secretKey = conf["JwtSettings:Key"] ??
@@ -22,12 +23,30 @@ public class TokenCreator(IConfiguration conf) : ITokenCreator
 
     public string CreateAccessToken(TokenClaims claims, DateTime expiresIn)
     {
+        // Temporary solution: compilation error occurs when `TokenClaims` structure changes
+        // To force adding of new claims
+        if (claims is not TokenClaims(var userId))
+        {
+            throw new ArgumentNullException(nameof(claims));
+        }
+
+        var claimsArray = new[] { new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()) };
+
         var token = new JwtSecurityToken(
-            issuer: _issuer, audience: _audience, expires: expiresIn,
-            signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey)),
+            issuer: _issuer, audience: _audience, expires: expiresIn, claims: claimsArray,
+            signingCredentials:
+            new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey)),
                 SecurityAlgorithms.HmacSha256));
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public TokenClaims ParseAccessToken(string token)
+    {
+        var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        var claim = jwtSecurityToken.Claims.First().Value;
+
+        return new TokenClaims(Guid.Parse(claim));
     }
 
     public string CreateRefreshToken() => Convert.ToBase64String(Guid.NewGuid().ToByteArray());

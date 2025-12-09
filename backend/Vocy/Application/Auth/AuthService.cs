@@ -10,7 +10,7 @@ namespace Application.Auth;
 public class AuthService(
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
-    ITokenCreator tokenCreator)
+    ITokenManager tokenManager)
 {
     private const int AccessTokenExpirationDurationSecs = 120;
     private const int RefreshTokenExpirationDurationHours = 6;
@@ -53,7 +53,7 @@ public class AuthService(
 
     public async Task<AuthResponse> Refresh(RefreshTokenCommand refreshTokenCommand)
     {
-        var oldRefreshTokenHash = tokenCreator.HashToken(refreshTokenCommand.RefreshToken);
+        var oldRefreshTokenHash = tokenManager.HashToken(refreshTokenCommand.RefreshToken);
         var oldRefreshToken = await _refreshTokenRepository.GetFirstAsync(t => oldRefreshTokenHash == t.TokenHash);
 
         if (!oldRefreshToken.IsActive)
@@ -73,10 +73,10 @@ public class AuthService(
     {
         var claims = new TokenClaims(userId);
         var accessToken =
-            tokenCreator.CreateAccessToken(claims, DateTime.UtcNow.AddSeconds(AccessTokenExpirationDurationSecs));
+            tokenManager.CreateAccessToken(claims, DateTime.UtcNow.AddSeconds(AccessTokenExpirationDurationSecs));
 
-        var refreshTokenValue = tokenCreator.CreateRefreshToken();
-        var refreshTokenHash = tokenCreator.HashToken(refreshTokenValue);
+        var refreshTokenValue = tokenManager.CreateRefreshToken();
+        var refreshTokenHash = tokenManager.HashToken(refreshTokenValue);
 
         var refreshToken = new RefreshToken(userId, refreshTokenHash,
             DateTime.UtcNow.AddHours(RefreshTokenExpirationDurationHours), DateTime.UtcNow);
