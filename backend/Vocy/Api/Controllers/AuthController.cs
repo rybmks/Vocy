@@ -1,17 +1,17 @@
+using Application.Auth;
+using Application.Auth.Commands;
 using Application.User;
-using Application.User.Auth;
-using Application.User.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
 [Route("api")]
-public class UserController(UserService userService) : Controller
+public class AuthController(AuthService authService) : Controller
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand loginUserCommand)
     {
-        var serviceResponse = await userService.Register(loginUserCommand);
+        var serviceResponse = await authService.Register(loginUserCommand);
         Response.Cookies.Append("access", serviceResponse.AccessToken);
         Response.Cookies.Append("refresh", serviceResponse.RefreshToken);
 
@@ -21,7 +21,7 @@ public class UserController(UserService userService) : Controller
     [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginUserCommand loginUserCommand)
     {
-        var serviceResponse = await userService.LogIn(loginUserCommand);
+        var serviceResponse = await authService.LogIn(loginUserCommand);
         Response.Cookies.Append("access", serviceResponse.AccessToken);
         Response.Cookies.Append("refresh", serviceResponse.RefreshToken);
 
@@ -39,7 +39,7 @@ public class UserController(UserService userService) : Controller
         }
 
         var command = new RefreshTokenCommand(refreshToken);
-        var serviceResponse = await userService.Refresh(command);
+        var serviceResponse = await authService.Refresh(command);
 
         Response.Cookies.Append("access", serviceResponse.AccessToken);
         Response.Cookies.Append("refresh", serviceResponse.RefreshToken);

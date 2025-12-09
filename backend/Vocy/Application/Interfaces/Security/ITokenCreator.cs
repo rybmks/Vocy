@@ -1,4 +1,4 @@
-using Application.User.Auth;
+using Application.Auth.Helpers;
 
 namespace Application.Interfaces.Security;
 

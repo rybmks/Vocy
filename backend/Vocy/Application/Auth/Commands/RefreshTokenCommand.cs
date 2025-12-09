@@ -1,3 +1,3 @@
-namespace Application.User.Commands;
+namespace Application.Auth.Commands;
 
 public record RefreshTokenCommand(String RefreshToken);

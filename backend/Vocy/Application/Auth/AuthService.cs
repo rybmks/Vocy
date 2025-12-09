@@ -1,15 +1,13 @@
+using Application.Auth.Commands;
+using Application.Auth.Helpers;
 using Application.Interfaces;
 using Application.Interfaces.Security;
 using Application.Security;
-using Application.User.Auth;
-using Application.User.Commands;
 using Domain.Auth;
 
-namespace Application.User;
+namespace Application.Auth;
 
-using Domain.User;
-
-public class UserService(
+public class AuthService(
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
     ITokenCreator tokenCreator)
@@ -17,13 +15,13 @@ public class UserService(
     private const int AccessTokenExpirationDurationSecs = 120;
     private const int RefreshTokenExpirationDurationHours = 6;
 
-    private readonly IRepository<User> _userRepository = unitOfWork.GetRepository<User>();
+    private readonly IRepository<Domain.User.User> _userRepository = unitOfWork.GetRepository<Domain.User.User>();
     private readonly IRepository<RefreshToken> _refreshTokenRepository = unitOfWork.GetRepository<RefreshToken>();
 
 
     public async Task<AuthResponse> Register(RegisterUserCommand registerUserCommand)
     {
-        User user = new(registerUserCommand.Name, registerUserCommand.Email,
+        Domain.User.User user = new(registerUserCommand.Name, registerUserCommand.Email,
             passwordHasher.Hash(registerUserCommand.Password));
 
         var userId = await _userRepository.AddAsync(user);

@@ -1,15 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
+using Application.Auth.Helpers;
 using Application.Interfaces.Security;
-using Application.Security;
-using Application.User.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Auth;
 
-public class JwtTokenCreator(IConfiguration conf) : ITokenCreator
+public class TokenCreator(IConfiguration conf) : ITokenCreator
 {
 //#TODO: Error handling
     private readonly string _secretKey = conf["JwtSettings:Key"] ??

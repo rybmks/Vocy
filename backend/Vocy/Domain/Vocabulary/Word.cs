@@ -1,3 +1,5 @@
+using Domain.Base;
+
 namespace Domain.Vocabulary;
 
-public record Word(Guid Id, string Original, string Translation);
+public record Word(string Value, Language Language) : BaseIdentity;

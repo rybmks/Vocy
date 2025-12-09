@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using Application.Auth;
 using Application.Interfaces;
 using Application.Interfaces.Security;
 using Application.Security;
@@ -42,8 +43,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
-builder.Services.AddScoped<ITokenCreator, JwtTokenCreator>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ITokenCreator, TokenCreator>();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddOpenApi();
 
