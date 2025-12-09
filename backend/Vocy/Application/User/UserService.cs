@@ -4,15 +4,12 @@ using Application.Security;
 using Application.User.Auth;
 using Application.User.Commands;
 using Domain.Auth;
-using Domain.Base;
 
 namespace Application.User;
 
 using Domain.User;
 
 public class UserService(
-    // IRepository<Domain.User.User> userRepository,
-    // IRepository<RefreshToken> refreshTokenRepository,
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
     ITokenCreator tokenCreator)

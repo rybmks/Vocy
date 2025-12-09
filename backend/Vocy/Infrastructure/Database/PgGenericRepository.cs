@@ -1,10 +1,9 @@
 using System.Linq.Expressions;
 using Application.Interfaces;
 using Domain.Base;
-using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure;
+namespace Infrastructure.Database;
 
 public class PgGenericRepository<T>(VocyDbContext context) : IRepository<T> where T : BaseIdentity
 {

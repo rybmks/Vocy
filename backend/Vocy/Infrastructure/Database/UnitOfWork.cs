@@ -1,8 +1,7 @@
 using Application.Interfaces;
 using Domain.Base;
-using Infrastructure.Database;
 
-namespace Infrastructure;
+namespace Infrastructure.Database;
 
 public class UnitOfWork(VocyDbContext context) : IUnitOfWork
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.User;
+namespace Infrastructure.TypeConfigurations;
 
 public class UserEntityTypeConfiguration : IEntityTypeConfiguration<Domain.User.User>
 {
