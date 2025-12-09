@@ -23,7 +23,6 @@ public class UserService(
 
     public async Task<AuthResponse> Register(RegisterUserCommand registerUserCommand)
     {
-        Console.WriteLine(registerUserCommand);
         User user = new(registerUserCommand.Name, registerUserCommand.Email,
             passwordHasher.Hash(registerUserCommand.Password));
 
