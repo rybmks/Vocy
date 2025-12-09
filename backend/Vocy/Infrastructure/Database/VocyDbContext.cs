@@ -13,6 +13,8 @@ public class VocyDbContext(DbContextOptions<VocyDbContext> options) : DbContext(
         new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<User>());
     }
 
-    public DbSet<User> Users => Set<User>();
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    // public DbSet<Connection> Connections { get; set; }
 }
