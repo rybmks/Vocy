@@ -5,6 +5,11 @@
       "Microsoft.AspNetCore": "Warning"
     }
   },
+  "JwtSettings": {
+    "Issuer": "ISSUER_URL",
+    "Audience": "AUDIENCE_URL",
+    "Key": "YOUR_SECURITY_KEY"
+  },
   "AllowedHosts": "*",
   "ConnectionStrings": {
     "DatabaseConnection": "YOUR_CONNECTION_STRING"
