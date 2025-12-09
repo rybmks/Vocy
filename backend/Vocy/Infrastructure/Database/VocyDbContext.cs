@@ -1,5 +1,5 @@
 using Domain.Auth;
-using Infrastructure.User;
+using Infrastructure.TypeConfigurations;
 
 namespace Infrastructure.Database;
 
@@ -13,6 +13,7 @@ public class VocyDbContext(DbContextOptions<VocyDbContext> options) : DbContext(
         new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<User>());
     }
 
-    public DbSet<User> Users => Set<User>();
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 }

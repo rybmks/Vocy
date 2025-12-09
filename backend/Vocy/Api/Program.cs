@@ -1,21 +1,21 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Application.Interfaces;
 using Application.Interfaces.Security;
 using Application.Security;
 using Application.User;
-using Domain.Auth;
-using Domain.User;
 using Infrastructure.Auth;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Database;
 using Infrastructure.Security;
-using Infrastructure.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
 builder.Services.AddDbContext<VocyDbContext>(opts =>
 {
     opts.UseNpgsql(builder.Configuration["ConnectionStrings:DatabaseConnection"]);
@@ -40,12 +40,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped<IRepository<User>, PgUserRepository>();
-builder.Services.AddScoped<IRepository<RefreshToken>, PgRefreshTokenRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<ITokenCreator, JwtTokenCreator>();
 builder.Services.AddScoped<UserService>();
-
 
 builder.Services.AddOpenApi();
 

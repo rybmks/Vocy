@@ -8,18 +8,18 @@ public interface IRepository<T> where T : BaseIdentity
     // TODO: Change giud to BaseIdentity
 
     //Get
-    Task<T> Get(Guid id);
-    Task<T> GetFirstOrDefault(Expression<Func<T, bool>> expr);
-    Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expr);
+    Task<T> GetAsync(Guid id);
+    Task<T> GetFirstAsync(Expression<Func<T, bool>> expr);
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expr);
 
     //Remove
-    Task Remove(T entity);
-    Task Remove(Guid id);
-    Task RemoveAll(Expression<Func<T, bool>> expr);
+    void Remove(T entity);
+    Task RemoveAsync(Guid id);
+    void RemoveAll(Expression<Func<T, bool>> expr);
 
     //Update
-    Task Update(T entity);
+    void Update(T entity);
 
     //Save
-    Task<Guid> Save(T entity);
+    Task<Guid> AddAsync(T entity);
 }
