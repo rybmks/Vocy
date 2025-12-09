@@ -1,6 +1,5 @@
 using Application.Auth;
 using Application.Auth.Commands;
-using Application.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;

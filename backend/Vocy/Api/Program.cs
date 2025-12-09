@@ -4,7 +4,6 @@ using Application.Auth;
 using Application.Interfaces;
 using Application.Interfaces.Security;
 using Application.Security;
-using Application.User;
 using Infrastructure.Auth;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Database;
