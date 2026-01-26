@@ -42,7 +42,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
-builder.Services.AddScoped<ITokenCreator, TokenCreator>();
+builder.Services.AddScoped<ITokenManager, TokenManager>();
 builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddOpenApi();

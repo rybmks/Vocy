@@ -23,13 +23,7 @@ public class TokenManager(IConfiguration conf) : ITokenManager
 
     public string CreateAccessToken(TokenClaims claims, DateTime expiresIn)
     {
-        // Temporary solution: compilation error occurs when `TokenClaims` structure changes
-        // To force adding of new claims
-        if (claims is not TokenClaims(var userId))
-        {
-            throw new ArgumentNullException(nameof(claims));
-        }
-
+        var userId = claims.UserId;
         var claimsArray = new[] { new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()) };
 
         var token = new JwtSecurityToken(
