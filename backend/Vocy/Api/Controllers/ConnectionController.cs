@@ -9,7 +9,8 @@ public class ConnectionController(ConnectionService connectionService) : Control
 {
     public async Task Create(CreateConnectionCommand connectionCommand)
     {
-        var access = Request.Cookies["acceess"];
+        // TODO: Replace with generic solution (Middleware)
+        var access = Request.Cookies["access"];
 
         if (access == null)
             throw new Exception("no access");
