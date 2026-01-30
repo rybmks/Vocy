@@ -1,3 +1,6 @@
+#temporary during early stage development 
+Migrations/
+
 .idea
 .DS_Store
 .vscode
